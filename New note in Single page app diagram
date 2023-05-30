@@ -1,0 +1,30 @@
+sequenceDiagram
+    participant browser
+    participant server
+
+    Note over browser: User navigates to https://studies.cs.helsinki.fi/exampleapp/spa
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/spa
+    activate server
+    server-->>browser: HTML document, CSS, JS files
+    deactivate server
+
+    Note right of browser: Browser parses the HTML document and applies CSS styles. The JavaScript single-page application (SPA) begins initializing.
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    activate server
+    server-->>browser: [{ "content": "HTML is easy", "date": "2023-1-1" }, ... ]
+    deactivate server
+
+    Note right of browser: The JavaScript SPA uses the returned JSON data to generate the note view on the browser.
+
+    Note over browser: User enters a new note into the input field and clicks the submit button.
+
+    Note right of browser: JavaScript SPA captures the form submit event, preventing default HTML form submission and prepares JSON data for AJAX request.
+
+    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa { "content": "User's new note", "date": "2023-5-30" }
+    activate server
+    server-->>browser: HTTP 201 Created
+    deactivate server
+
+    Note right of browser: JavaScript SPA receives the response, updates the notes data locally and refreshes the note view on the browser.
