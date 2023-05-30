@@ -1,0 +1,19 @@
+sequenceDiagram
+    participant browser
+    participant server
+
+    Note over browser: User navigates to https://studies.cs.helsinki.fi/exampleapp/spa
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/spa
+    activate server
+    server-->>browser: HTML document, CSS, JS files
+    deactivate server
+
+    Note right of browser: Browser parses the HTML document and applies CSS styles. The JavaScript single-page application (SPA) begins initializing.
+    
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    activate server
+    server-->>browser: [{ "content": "HTML is easy", "date": "2023-1-1" }, ... ]
+    deactivate server
+
+    Note right of browser: The JavaScript SPA uses the returned JSON data to generate the note view on the browser.
