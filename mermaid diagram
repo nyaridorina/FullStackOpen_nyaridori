@@ -1,0 +1,20 @@
+sequenceDiagram
+    participant browser
+    participant server
+
+    Note over browser: User navigates to https://studies.cs.helsinki.fi/exampleapp/notes
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/notes
+    activate server
+    server-->>browser: HTML document, CSS, JS files
+    deactivate server
+
+    Note over browser: User writes into the text field and clicks the submit button.
+    Note right of browser: JavaScript captures the form submit event, preventing default HTML form submission and prepares JSON data for AJAX request.
+
+    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note { "content": "User's note", "date": "2023-5-30" }
+    activate server
+    server-->>browser: HTTP 201 Created
+    deactivate server
+
+    Note right of browser: JavaScript receives the response and updates the page to include the new note.
